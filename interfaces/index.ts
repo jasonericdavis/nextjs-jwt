@@ -6,5 +6,13 @@
 
 export type User = {
   id: number
-  name: string
+  name: string,
+  roles: Array<string>
+}
+
+
+export type validateCookieResponse = {
+  user: User
+  error: string | null
+  authenticated: boolean
 }

@@ -2,6 +2,7 @@ import {User, validateCookieResponse} from '../interfaces'
 import jwt from 'jsonwebtoken'
 import cookie from 'cookie'
 import {NextApiRequest, NextApiResponse} from 'next'
+import {IncomingMessage} from 'http'
 
 
 const secretKey =  'SECRET_KEY'
@@ -39,7 +40,7 @@ export const verify = (authToken:string, errCallback: (err:any)=> void) => {
 /***
  * Get the auth token from the cookies located in the request
  */
-export const getTokenFromCookies: (request: NextApiRequest) => string = (request) => {
+export const getTokenFromCookies: (request: NextApiRequest | IncomingMessage ) => string = (request) => {
     return cookie.parse(request.headers.cookie || '').auth_token
 }
 

@@ -1,5 +1,5 @@
 import {User} from '../../interfaces'
-import {createAuthToken} from '../../lib/token'
+import {createAuthToken} from '../../lib/server/token'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default(request: NextApiRequest, response: NextApiResponse) => {

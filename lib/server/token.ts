@@ -1,4 +1,4 @@
-import {User, validateCookieResponse} from '../interfaces'
+import {User, validateCookieResponse} from '../../interfaces'
 import jwt from 'jsonwebtoken'
 import cookie from 'cookie'
 import {NextApiRequest, NextApiResponse} from 'next'
@@ -26,7 +26,7 @@ export const sign = (user:User) => {
  * @param authToken
  * @param errCallback - callback for if there is an error verifying the authToken 
  */
-export const verify = (authToken:string, errCallback: (err:any)=> void) => {
+export const verify:(authToken:string, errCallback: (err:any) => void) => void | User = (authToken, errCallback) => {
     // TODO need to make sure the token hasn't expired
     return  jwt.verify(authToken, secretKey, (err:any, decoded:any) => {
                 if(err) {

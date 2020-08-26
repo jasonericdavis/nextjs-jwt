@@ -26,15 +26,16 @@ export const sign = (user:User) => {
  * @param authToken
  * @param errCallback - callback for if there is an error verifying the authToken 
  */
-export const verify:(authToken:string, errCallback: (err:any) => void) => void | User = (authToken, errCallback) => {
+export const verify = (authToken: string, errCallback: jwt.VerifyCallback | undefined) => {
     // TODO need to make sure the token hasn't expired
-    return  jwt.verify(authToken, secretKey, (err:any, decoded:any) => {
-                if(err) {
-                    errCallback(err);
-                    return
-                }
-                return decoded
-        })
+    // return  jwt.verify(authToken, secretKey, function(err, decoded) {
+    //             if(err) {
+    //                 errCallback(err);
+    //                 return null
+    //             }
+    //             return decoded
+    //     })
+    return  jwt.verify(authToken, secretKey, errCallback)
 }
 
 /***

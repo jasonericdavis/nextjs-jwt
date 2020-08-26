@@ -17,13 +17,13 @@ export default (req:NextApiRequest, res:NextApiResponse) => {
         }
 
         // @TODO: check to make sure the token hasn't expired
-        let user = verify(accessToken, (err) => {
+        let decoded = verify(accessToken, (err) => {
             console.log(err)
             res.status(401).end()
             return
         })
 
-        if(user) {
+        if(decoded) {
             createAuthToken(res, user)
             res.status(200).end()
             return

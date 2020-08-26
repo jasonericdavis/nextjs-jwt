@@ -1,22 +1,26 @@
-import {getTokenFromCookies, getUserFromAuthToken} from '../lib/server/token'
-import { GetServerSideProps } from 'next'
+// import {getTokenFromCookies, getUserFromAuthToken} from '../lib/server/token'
+// import { GetServerSideProps } from 'next'
 import {User} from '../interfaces'
 import Layout from '../components/Layout'
 import ProtectedPage  from '../components/ProtectedPage'
+import useSWR from 'swr'
 
 
 type protectedProps = {
     user: User
 }
 
-const Protected: React.FC<protectedProps> = ({user}) => {
-    return (
-        !user ? <div> I dont know who you are </div>
-        : <Layout title="Protected Page">
-            <h1>Hello {user.name} 👋</h1>
-            <p> You have reached the protected page</p>
-        </Layout>
-    )
+const fetcher:(url:string) => any = (url) => fetch(url).then(r => r.json())
+
+const Protected: React.FC<protectedProps> = () => {
+    const {data, error} = useSWR<{name:string}, any>('api/user', fetcher)
+    
+    if(error) return <div>There was an error: {error.message}</div>
+    if(!data) return <div>I dont know who you are</div>
+    return <Layout title="Protected Page">
+                <h1>Hello {data.name} 👋</h1>
+                <p> You have reached the protected page</p>
+            </Layout>
 }
 
 
